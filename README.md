@@ -2,15 +2,15 @@
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![ApacheCassandra](https://img.shields.io/badge/cassandra-%231287B1.svg?style=for-the-badge&logo=apache-cassandra&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 
-Two most popular Nosqls were compared on the basis of data loading, CRUD operation, CRUD operation at various consistency levels and latency rate. 
-Lastly, visualisation was created using Mongocharts. 
+Two most popular __Nosqls__ were compared on the basis of data loading, __CRUD__ operation, CRUD operation at various __consistency levels__ and __latency rate__. Details about this project is available in this [document.](https://github.com/iqrabismii/Performance-Comparsion-between-Mongodb-and-Cassandra/blob/main/DATA225_Project_Team4_final.pdf)
+
+Lastly, visualisation was created using __Mongocharts__. Details about visualisation are provided in this [notebook.](https://github.com/iqrabismii/Performance-Comparsion-between-Mongodb-and-Cassandra/blob/main/Visualisation_using_Mongodb_Atlas.ipynb)
+
 Below are the following codes used in this project. 
-
-
 
 SQLite: 
 
-	•	We installed the DB browser to access the sqlite zip file from the below link:
+	•	Installed the DB browser to access the sqlite zip file from the below link:
 
          https://sqlitebrowser.org/
 
@@ -25,44 +25,39 @@ Similar join queries were used to obtain other tables and after which the final 
 
 
 
+### Cassandra:
+
+	1. Docker Set Up : Download Docker for desktop from the below link:https://www.docker.com
+
+	2. Follow the instructions below for setting up a cassandra instance on Docker
+	
+![Screenshot 2023-01-22 at 9 57 02 PM](https://user-images.githubusercontent.com/108056063/213974470-28c9af28-c116-4c28-93dc-a8c7cdeef989.png)
 
 
-Cassandra:
+	3. Create three nodes in a cluster on docker using the below commands
+	
+![Screenshot 2023-01-22 at 9 56 50 PM](https://user-images.githubusercontent.com/108056063/213974443-e0508039-4eab-43e0-b9b1-f6cfb0a0380d.png)
 
-	1	Docker Set Up : Download Docker for desktop from the below link:https://www.docker.com
+	4. Place all the files to be uploaded into cassandra instance in the same directory as the Docker is present
 
-	2	Follow the instructions below for setting up a cassandra instance on Docker
-.
+	5. Open the cqlsh terminal in the same path as the files placed using the CLI option on the cassandra instance.
 
-￼
-
-3.  Create three nodes in a cluster on docker using the below commands
-￼
-           
- 4. Place all the files to be uploaded into cassandra instance in the same directory as the Docker is present.
-
-5. Open the cqlsh terminal in the same path as the files placed using the CLI option on the cassandra instance.
+	6. Create the KEYSPACE named BasketBall using the following command.
 
 
+	CREATE KEYSPACE BasketBall
+	  WITH REPLICATION = { 
+	   'class' : 'NetworkTopologyStrategy', 
+	   'datacenter1' : 3
+	  } ;
 
+	7. Use the KEYSPACE BasketBall created to further create the column families/tables required as per the csv files required for the analysis.
 
+	 USE basketball;
 
-6. Create the KEYSPACE named BasketBall using the following command.
+	8. Using the following command create the required column families such as player_analysis, game_analysis, team_analysis and bb_nalaysis  in the   KEYSPACE BasketBall.
 
-
-CREATE KEYSPACE BasketBall
-  WITH REPLICATION = { 
-   'class' : 'NetworkTopologyStrategy', 
-   'datacenter1' : 3
-  } ;
-
-7. Use the KEYSPACE BasketBall created to further create the column families/tables required as per the csv files required for the analysis.
- 
- USE basketball;
-
-8. Using the following command create the required column families such as player_analysis, game_analysis, team_analysis and bb_nalaysis  in the KEYSPACE BasketBall.
-
-player_analysis:
+	player_analysis:
 
 CREATE COLUMNFAMILY player_analysis
 (PLAYER_ID int PRIMARY KEY, PLAYER_NAME varchar, SCHOOL varchar, COUNTRY varchar, BIRTHDATE date, PLAYER_CURRENT_AGE int, HEIGHT int, WEIGHT int, SEASON_EXP int,POSITION varchar, ROSTERSTATUS varchar,TEAM_ID int, PTS float, REB float, AST float, PLAYER_NM varchar, CONTRACT_TYPE_2020_2021 varchar, SALARY_2020_2021 int, CONTRACT_TYPE_2021_2022 varchar, SALARY_2021_2022 int, CONTRACT_TYPE_2022_2023 varchar, SALARY_2022_2023 int, CONTRACT_TYPE_2023_2024 varchar, SALARY_2023_2024 float) WITH COMPACT STORAGE;
@@ -174,7 +169,7 @@ LATENCY
 
 
 
-MongoDB:
+### MongoDB:
 
 	1	MongoDB server was installed on the local machine following the instruction given in the link below
 
@@ -183,36 +178,54 @@ https://treehouse.github.io/installation-guides/mac/mongo-mac.html
 	2	After downloading the mongo server, the respective directory was created to store the mongo data files. 
 
 Code: mkdir -p /srv/mongodb/rs0-0  /srv/mongodb/rs0-1 /srv/mongodb/rs0-2
+
 	3	Three replica sets were created with port number 27018, 27019, 27020 using the code below.
+	
 sudo mongod --port 27018 --dbpath /data/db/rs0-0 --replSet rs0 --bind_ip localhost 
+
 sudo mongod --port 27019 --dbpath /srv/mongodb/rs0-0 --replSet rs0 --bind_ip localhost 
+
 sudo mongod --port 27020 --dbpath /srv/mongodb/rs0-2 --replSet rs0 --bind_ip localhost
+
 	4	Then we connected to primary node  port number 27018 in the new terminal using the code below: mongo –port 27018
+	
 	5	We also connected to secondary nodes  port number (27019 and 27020 )in the new shell using the code below: mongo –port 27019 , mongo –port 27020
+	
 	6	Then after creating the nodes we initiated the replication process  in the primary node using the code below:
+	
 rs.initiate({_id: "rs0",members: [{ _id: 0, host : "127.0.0.1:27018" },{ _id: 1, host : "127.0.0.1:27019" },{ _id: 2, host : "127.0.0.1:27020" }]})
 
 	7	Checked the status of nodes using the code below:
 rs.status( )
+
 	8	We downloaded mongodb Compass from the below link: https://www.mongodb.com/try/download/compass
+	
 	9	Created the two connections in the compass; first using  the above mentioned  port numbers 27018, 27019 & 27020 and second using  the default port number 27017
-￼
-￼
+
+![Screenshot 2023-01-22 at 9 56 17 PM](https://user-images.githubusercontent.com/108056063/213974389-c8b3daa4-8638-4859-9951-3411bceb84c4.png)
 
 	10	Installed Pymongo using PIP install: pip install pymongo  , Version number 3.12.3
+	
 	11	Imported the pymongo module, Json and Pandas in jupyter notebook
+	
 	12	Connected to Mongo localhost using the  following command:
 client= pymongo.MongoClient("mongodb://localhost:27017")
+
 	13	Uploaded the csv files into pandas dataframe using the command below:
 df = pd.read_csv(r"Game_Analysis.csv")
+
 	14	The upload csv files in dataframe was converted in JSON format using the following command:
 data = df .to_dict(orient="record")
+
 	15	Created Database “BasketBall” on Mongo Client using the following command:
 database= client["BasketBall"]
+
 	16	Then collection was created in the same database (“BasketBall”) and  converted JSON files were uploaded into collections using the following command: database.Game_Analysis.insert_many(data)
+	
 	17	Total 4 collections named :  game_analysis, player_analysis, team_analysis and bb_analysis were created in the database “BasketBall” on MongoDB Compass.
 
-￼
+
+![Screenshot 2023-01-22 at 9 55 23 PM](https://user-images.githubusercontent.com/108056063/213974290-fb1d1b6d-9f32-4ecf-ae86-909256194a3a.png)
 	18	The same process mentioned above was followed to upload data  into the other connection ie. for port number 27018
 
 Steps for CRUD Operations:
@@ -262,45 +275,40 @@ Query to measure latency for varying read and write operations for different col
 db.player_analysis.latencyStats( { histograms: true } )
 
 
-ATLAS
+### ATLAS
 
 	1	Registered on the MongoDB cloud using the link below:
 
-https://www.mongodb.com/cloud/atlas/register
+		https://www.mongodb.com/cloud/atlas/register
 
 	2	We then added a new database user.
 
-￼
-
-
-
-
-
-
-
-
-
+![Screenshot 2023-01-22 at 9 51 57 PM](https://user-images.githubusercontent.com/108056063/213973931-4329c8d3-26fb-487c-9e0c-28bd15fdebec.png)
 
 
 
 
 	3	Created a cluster named “newCluster”
-
-￼
+	
+![Screenshot 2023-01-22 at 9 52 23 PM](https://user-images.githubusercontent.com/108056063/213973974-df3446a0-8260-4c7c-8313-26c671811ce0.png)
 
 
 	4	Loaded the data as below:
 
 Connected to MongoDB Compass by clicking on this link below
-￼
-Connected to cluster in Compass
-￼
 
+
+![Screenshot 2023-01-22 at 9 52 38 PM](https://user-images.githubusercontent.com/108056063/213974004-99687b73-4609-4673-9184-84161417101e.png)
+
+Connected to cluster in Compass
+
+![Screenshot 2023-01-22 at 9 53 10 PM](https://user-images.githubusercontent.com/108056063/213974065-7fc21102-8de5-4ff4-bde5-3cbf94a61f51.png)
 
 
 Created the collections in the Compass and Uploaded csv files directly in the Compass
 
-￼
+![Screenshot 2023-01-22 at 9 53 22 PM](https://user-images.githubusercontent.com/108056063/213974081-71d7a627-98d8-46db-b4e7-e6d9b259e81f.png)
+
 
 
 
@@ -308,14 +316,17 @@ Created the collections in the Compass and Uploaded csv files directly in the Co
 
 
  Collections and data on the compass could be viewed on cloud as well
+![Screenshot 2023-01-22 at 9 53 34 PM](https://user-images.githubusercontent.com/108056063/213974095-33e3ad57-e567-4b8a-8cb2-15209a09f92c.png)
 
-￼
+
 
 
 MongoDB Charts for Visualization:
 
 Created charts for NBA player analysis using MongoDB charts on Atlas.
+![Screenshot 2023-01-22 at 9 53 47 PM](https://user-images.githubusercontent.com/108056063/213974116-3edce2af-1ab4-4c64-95c8-e3767c36dac6.png)
 
-￼
+
+
 
 

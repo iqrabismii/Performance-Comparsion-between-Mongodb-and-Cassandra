@@ -2,13 +2,20 @@
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![ApacheCassandra](https://img.shields.io/badge/cassandra-%231287B1.svg?style=for-the-badge&logo=apache-cassandra&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 
+### Introduction
+MongoDB and Cassandra are two of the most popular NoSQL databases, and they are often compared because they have similar features and capabilities. Both are designed to handle large amounts of unstructured data and are known for their scalability, high performance, and ability to handle high read and write loads. However, they have different architectures and design principles that make them suitable for different use cases.
+
+MongoDB is a document-oriented database that follows a "collection" and "document" model, whereas Cassandra is a column-family based NoSQL database. MongoDB is a CP (Consistent and Partition-tolerant) system, which means it prioritizes consistency over availability. On the other hand, Cassandra is an AP (Available and Partition-tolerant) system, which prioritizes availability over consistency. This makes Cassandra more suitable for use cases that require high availability and can tolerate some inconsistencies in data.
+
+In this project, I have done a comparison between MongoDB and Cassandra on CRUD (Create, Read, Update and Delete) operations at various consistency levels. This comparison allows us to understand the performance and behavior of both databases under different conditions and to determine which one is more suitable for a specific use case.
+
 Two most popular __Nosqls__ were compared on the basis of data loading, __CRUD__ operation, CRUD operation at various __consistency levels__ and __latency rate__. Details about this project is available in this [document.](https://github.com/iqrabismii/Performance-Comparsion-between-Mongodb-and-Cassandra/blob/main/DATA225_Project_Team4_final.pdf)
 
 Lastly, visualisation was created using __Mongocharts__. Details about visualisation are provided in this [notebook.](https://github.com/iqrabismii/Performance-Comparsion-between-Mongodb-and-Cassandra/blob/main/Visualisation_using_Mongodb_Atlas.ipynb)
 
 Below are the following codes used in this project. 
 
-SQLite: 
+### SQLite: 
 
 	•	Installed the DB browser to access the sqlite zip file from the below link:
 
